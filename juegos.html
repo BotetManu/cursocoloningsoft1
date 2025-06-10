@@ -119,7 +119,7 @@
   </section>
 
   <section class="suggestions">
-    <h2>Sugiere un nuevo juego:</h2>
+    <h2>¿A que jugamos hoy?</h2>
     <form id="suggestForm">
       <input type="text" id="gameInput" placeholder="Nombre del juego" required />
       <button type="submit">Agregar</button>
@@ -130,9 +130,9 @@
   <!-- Nuevo: Minijuego -->
   <section id="wordGame">
     <h2>Adivina la Palabra</h2>
-    <p>Ingresa una palabra de 5 letras para adivinar.</p>
+    <p>Ingresa una palabra para adivinar.</p>
     <form id="guessForm">
-      <input type="text" id="guessInput" maxlength="5" placeholder="Tu intento" required />
+      <input type="text" id="guessInput" placeholder="Tu intento" required />
       <button type="submit">Probar</button>
     </form>
     <div id="attempts"></div>
@@ -172,13 +172,17 @@
       e.preventDefault();
       const guess = guessInput.value.toLowerCase().trim();
 
-      if (guess.length !== 5 || !/^[a-z]+$/.test(guess)) {
+      //TO-DO -El maximo de cadena no tiene porque ser 5 sino el numero de caracteres de la palabra elegida
+      /*if (guess.length !== targetWord.length || !/^[a-z]+$/.test(guess)) {
         alert("Por favor ingresa una palabra válida de 5 letras.");
         return;
-      }
+      }*/
 
       if (attemptCount >= maxAttempts) {
         resultDiv.textContent = `El juego ha terminado. La palabra era "${targetWord}".`;
+        return;
+      }else if (targetWord == guess){
+        resultDiv.textContent = "¡Ganaste!";
         return;
       }
 
