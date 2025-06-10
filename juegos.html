@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Comunidad de Juegos de Mesa</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fdfdfd;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+
+    header {
+      background: #4caf50;
+      color: white;
+      padding: 1em;
+      text-align: center;
+      border-radius: 10px;
+    }
+
+    section {
+      margin-top: 20px;
+    }
+
+    .game-list {
+      margin-top: 10px;
+      padding-left: 20px;
+    }
+
+    .suggestions {
+      margin-top: 30px;
+    }
+
+    input, button {
+      padding: 8px;
+      margin: 5px 0;
+    }
+
+    .suggested-game {
+      background: #e8f5e9;
+      padding: 8px;
+      margin: 4px 0;
+      border-left: 4px solid #4caf50;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Bienvenido a la Comunidad de Juegos de Mesa</h1>
+  </header>
+
+  <section>
+    <h2>¿Qué son los juegos de mesa?</h2>
+    <p>Los juegos de mesa son una excelente forma de compartir, divertirse y aprender. ¡Únete a nuestra comunidad para descubrir nuevos títulos y jugar juntos!</p>
+  </section>
+
+  <section>
+    <h2>Algunos juegos populares:</h2>
+    <ul class="game-list">
+      <li>Catan</li>
+      <li>Carcassonne</li>
+      <li>Dixit</li>
+      <li>Ticket to Ride</li>
+    </ul>
+  </section>
+
+  <section class="suggestions">
+    <h2>Sugiere un nuevo juego:</h2>
+    <form id="suggestForm">
+      <input type="text" id="gameInput" placeholder="Nombre del juego" required />
+      <button type="submit">Agregar</button>
+    </form>
+    <div id="suggestedGames"></div>
+  </section>
+
+  <script>
+    const form = document.getElementById('suggestForm');
+    const input = document.getElementById('gameInput');
+    const suggestedGames = document.getElementById('suggestedGames');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const gameName = input.value.trim();
+      if (gameName !== "") {
+        const gameItem = document.createElement('div');
+        gameItem.className = 'suggested-game';
+        gameItem.textContent = gameName;
+        suggestedGames.appendChild(gameItem);
+        input.value = "";
+      }
+    });
+  </script>
+</body>
+</html>
