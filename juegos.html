@@ -8,9 +8,14 @@
     body {
       font-family: Arial, sans-serif;
       background: #fdfdfd;
+      background-image: url("./juegos-de-mesa-en-familia-1140x855.jpg");
       margin: 0;
       padding: 20px;
       color: #333;
+      font-size: 1.4em;
+      color: #132a33;
+      font-weight: bold;
+      background-repeat: no-repeat;
     }
 
     header {
@@ -148,7 +153,7 @@
     });
 
     // --- Código para el minijuego de adivinar palabra ---
-    const dictionary = ['manzana', 'naranja', 'plátano', 'uvas', 'pera', 'kiwi', 'cereza'];
+    const dictionary = ['manzana', 'naranja', 'plátano', 'uvas', 'pera', 'kiwi', 'cereza', 'chirimoya'];
     const targetWord = dictionary[Math.floor(Math.random() * dictionary.length)].toLowerCase();
 
     const guessForm = document.getElementById('guessForm');
