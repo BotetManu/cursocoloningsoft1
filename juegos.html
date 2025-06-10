@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Comunidad de Juegos de Mesa</title>
   <style>
     body {
@@ -46,6 +46,46 @@
       border-left: 4px solid #4caf50;
       border-radius: 4px;
     }
+
+    /* Estilos para el minijuego */
+    #wordGame input, #wordGame button {
+      margin-right: 10px;
+    }
+
+    #attempts {
+      margin-top: 10px;
+    }
+
+    .attempt-row {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 5px;
+    }
+
+    .letter-box {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #ccc;
+      font-weight: bold;
+    }
+
+    .correct-position {
+      background-color: #6aaa64;
+      color: white;
+    }
+
+    .correct-letter {
+      background-color: #c9b458;
+      color: white;
+    }
+
+    .wrong-letter {
+      background-color: #787c7e;
+      color: white;
+    }
   </style>
 </head>
 <body>
@@ -77,21 +117,111 @@
     <div id="suggestedGames"></div>
   </section>
 
+  <!-- Nuevo: Minijuego -->
+  <section id="wordGame">
+    <h2>Adivina la Palabra</h2>
+    <p>Ingresa una palabra de 5 letras para adivinar.</p>
+    <form id="guessForm">
+      <input type="text" id="guessInput" maxlength="5" placeholder="Tu intento" required />
+      <button type="submit">Probar</button>
+    </form>
+    <div id="attempts"></div>
+    <div id="gameResult"></div>
+  </section>
+
   <script>
-    const form = document.getElementById('suggestForm');
-    const input = document.getElementById('gameInput');
+    // --- Código para el formulario de sugerencias ---
+    const suggestForm = document.getElementById('suggestForm');
+    const gameInput = document.getElementById('gameInput');
     const suggestedGames = document.getElementById('suggestedGames');
 
-    form.addEventListener('submit', function(e) {
+    suggestForm.addEventListener('submit', function(e) {
       e.preventDefault();
-      const gameName = input.value.trim();
+      const gameName = gameInput.value.trim();
       if (gameName !== "") {
         const gameItem = document.createElement('div');
         gameItem.className = 'suggested-game';
         gameItem.textContent = gameName;
         suggestedGames.appendChild(gameItem);
-        input.value = "";
+        gameInput.value = "";
       }
+    });
+
+    // --- Código para el minijuego de adivinar palabra ---
+    const dictionary = ['manzana', 'naranja', 'plátano', 'uvas', 'pera', 'kiwi', 'cereza'];
+    const targetWord = dictionary[Math.floor(Math.random() * dictionary.length)].toLowerCase();
+
+    const guessForm = document.getElementById('guessForm');
+    const guessInput = document.getElementById('guessInput');
+    const attemptsDiv = document.getElementById('attempts');
+    const resultDiv = document.getElementById('gameResult');
+    let attemptCount = 0;
+    const maxAttempts = 6;
+
+    guessForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const guess = guessInput.value.toLowerCase().trim();
+
+      if (guess.length !== 5 || !/^[a-z]+$/.test(guess)) {
+        alert("Por favor ingresa una palabra válida de 5 letras.");
+        return;
+      }
+
+      if (attemptCount >= maxAttempts) {
+        resultDiv.textContent = `El juego ha terminado. La palabra era "${targetWord}".`;
+        return;
+      }
+
+      const row = document.createElement('div');
+      row.className = 'attempt-row';
+
+      const targetArray = targetWord.split('');
+      const guessArray = guess.split('');
+      const usedIndices = [];
+
+      // Primero marcar las que están en posición correcta
+      guessArray.forEach((letter, i) => {
+        const box = document.createElement('div');
+        box.className = 'letter-box';
+
+        if (letter === targetArray[i]) {
+          box.textContent = letter.toUpperCase();
+          box.classList.add('correct-position');
+          usedIndices.push(i);
+        } else {
+          box.textContent = letter.toUpperCase();
+          box.classList.add('wrong-letter'); // Temporal
+          box.dataset.letter = letter;
+        }
+
+        row.appendChild(box);
+      });
+
+      // Luego revisar las que están en la palabra pero en posición incorrecta
+      row.querySelectorAll('.letter-box').forEach((box, i) => {
+        if (box.classList.contains('correct-position')) return;
+
+        const letter = box.dataset.letter;
+        const indexInTarget = targetArray.findIndex((char, idx) => char === letter && !usedIndices.includes(idx));
+
+        if (indexInTarget !== -1) {
+          box.classList.remove('wrong-letter');
+          box.classList.add('correct-letter');
+          usedIndices.push(indexInTarget);
+        }
+      });
+
+      attemptsDiv.appendChild(row);
+      attemptCount++;
+
+      if (guess === targetWord) {
+        resultDiv.textContent = "¡Felicidades! Has adivinado la palabra.";
+        guessForm.style.display = 'none';
+      } else if (attemptCount >= maxAttempts) {
+        resultDiv.textContent = `Lo siento, has perdido. La palabra era "${targetWord}".`;
+      }
+
+      guessInput.value = "";
     });
   </script>
 </body>
