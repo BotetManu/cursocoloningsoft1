@@ -116,7 +116,7 @@
         <li>Carcassonne</li>
         <li>Dixit</li>
         <li>Ticket to Ride</li> -->
-        <ul id="selectedGames"> </li>
+        <div id="selectedGamesContainer" style="display: flex; justify-content: center; gap: 40px;"></div>
       <!-- </ul> -->
   </section>
 
@@ -139,14 +139,23 @@
       return resultado;
     }
 
-    const juegosAleatorios = obtenerJuegosAleatorios(gameList, 8);
+   const juegosAleatorios = obtenerJuegosAleatorios(gameList, 9);
 
-    const lista = document.getElementById('selectedGames');
-    juegosAleatorios.forEach(juego => {
-      const li = document.createElement('li');
-      li.textContent = juego;
-      lista.appendChild(li);
-    });
+const contenedor = document.getElementById('selectedGamesContainer');
+
+// Crear 3 columnas vacías
+const columnas = [document.createElement('ul'), document.createElement('ul'), document.createElement('ul')];
+columnas.forEach(col => col.className = 'game-list');
+
+// Repartir los juegos aleatorios en las 3 columnas
+juegosAleatorios.forEach((juego, i) => {
+  const li = document.createElement('li');
+  li.textContent = juego;
+  columnas[i % 3].appendChild(li);
+});
+
+// Agregar las columnas al contenedor
+columnas.forEach(col => contenedor.appendChild(col));
 
    </script>
 
