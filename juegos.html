@@ -106,18 +106,49 @@
 
   <section>
     <h2>Las recomendaciones de Manu para hoy:</h2>
-    <ul class="game-list">
-      <li>Catan</li>
-      <li>Ciudadelas</li>
-      <li>Terraforming Mars</li>
-      <li>Magic the gathering</li>
-      <li>Parchís</li>
-      <li>Descent</li>
-      <li>Carcassonne</li>
-      <li>Dixit</li>
-      <li>Ticket to Ride</li>
-    </ul>
+      <!-- <ul class="game-list">
+        <li>Catan</li>
+        <li>Ciudadelas</li>
+        <li>Terraforming Mars</li>
+        <li>Magic the gathering</li>
+        <li>Parchís</li>
+        <li>Descent</li>
+        <li>Carcassonne</li>
+        <li>Dixit</li>
+        <li>Ticket to Ride</li> -->
+        <ul id="selectedGames"> </li>
+      <!-- </ul> -->
   </section>
+
+   <script>
+    var gameList = ['Catan', 'Carcassonne', 'Ticket to Ride', '7 Wonders', 'Dominion', 'Risk', 'Monopoly',
+     'Clue', 'Scrabble', 'Pandemic', 'Agricola', 'Terra Mystica', 'Codenames', 'Splendor', 'Azul', 'Wingspan',
+     'Scythe', 'Gloomhaven', 'Arkham Horror', 'Betrayal at House on the Hill', 'The Resistance', 'Love Letter', 
+     'Small World', 'Chess', 'Checkers', 'Hive', 'Tigris & Euphrates', 'Twilight Struggle', 'Everdell', 'Parks',
+     'Brass: Birmingham', 'Root', 'The Crew', 'Quacks of Quedlinburg', 'Unlock!', 'Exit: The Game', 'King of Tokyo',
+     'Jaipur', 'Patchwork', 'Barenpark', 'Camel Up', 'Dead of Winter', 'Spirit Island', 'Decrypto', 'Telestrations',
+     'Just One', 'Dixit', 'Takenoko', 'Bang!', 'Magic: The Gathering'];
+    
+    function obtenerJuegosAleatorios(array, cantidad) {
+      const copia = [...array];
+      const resultado = [];
+      for (let i = 0; i < cantidad; i++) {
+        const indice = Math.floor(Math.random() * copia.length);
+        resultado.push(copia.splice(indice, 1)[0]);
+      }
+      return resultado;
+    }
+
+    const juegosAleatorios = obtenerJuegosAleatorios(gameList, 8);
+
+    const lista = document.getElementById('selectedGames');
+    juegosAleatorios.forEach(juego => {
+      const li = document.createElement('li');
+      li.textContent = juego;
+      lista.appendChild(li);
+    });
+
+   </script>
 
   <section class="suggestions">
     <h2>¿A que jugamos hoy?</h2>
@@ -140,6 +171,35 @@
     <div id="gameResult"></div>
   </section>
 
+  <div id="main-menu" class="screen active">
+      <div class="menu-container">
+          <h1 class="game-title">JUEGO MARAVILLOSO</h1>
+          <div class="menu-options">
+      <div class="table1" id="grupo1">
+        <input type="submit" value="Jugar" onclick="ocultar('grupo1')">
+      </div>
+            <div class="table2" id="grupo2">
+        <input type="submit" value="Jugar" onclick="mostrar('grupo2')">
+      </div>
+      </div>
+  </div>
+
+
+ <script>
+  function ocultar(id){
+    var elemento = document.getElementById(id);
+    elemento.style.display = "none";
+    localStorage.setItem('hidden', 'false')
+  }
+  function mostrar(id){
+    var elemento = document.getElementById(id);
+    elemento.style.display = "none";
+    localStorage.setItem('hidden', 'true')
+  }
+ </script>
+
+
+
   <script>
     // --- Código para el formulario de sugerencias ---
     const suggestForm = document.getElementById('suggestForm');
@@ -160,6 +220,7 @@
 
     // --- Código para el minijuego de adivinar palabra ---
     const dictionary = ['manzana', 'naranja', 'plátano', 'uvas', 'pera', 'kiwi', 'cereza', 'chirimoya'];
+
     const targetWord = dictionary[Math.floor(Math.random() * dictionary.length)].toLowerCase();
 
     const guessForm = document.getElementById('guessForm');
