@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <!-- Hay que modificar el proyecto para conseguir que tenga un titulo precioso -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Comunidad de Juegos de Mesa</title>
@@ -15,11 +16,14 @@
       font-size: 1.4em;
       color: #132a33;
       font-weight: bold;
-      background-repeat: no-repeat;
+      background-repeat: round;
+    }
+    h2 {
+      text-align: center;
     }
 
     header {
-      background: #4caf50;
+      background: #9e437b;
       color: white;
       padding: 1em;
       text-align: center;
@@ -59,10 +63,10 @@
 
     .suggested-game {
       background: #e8f5e9;
-      padding: 8px;
-      margin: 4px 0;
-      border-left: 4px solid #4caf50;
-      border-radius: 4px;
+      padding: 20px;
+      margin: 20px 0;
+      border-left: 20px solid #4caf50;
+      border-radius: 20px;
     }
 
 /* Centrar el contenido del minijuego */
@@ -92,13 +96,13 @@
 }
 
 .letter-box {
-  width: 60px;
-  height: 60px;
+  width: 100px;
+  height: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid #aaa; /* Puedes dejarlo igual o reforzar un poco el borde */
-  font-size: 24px;         /* Ajuste opcional del tamaño de letra */
+  border: 8px solid #aaa; /* Puedes dejarlo igual o reforzar un poco el borde */
+  font-size: 50px;         /* Ajuste opcional del tamaño de letra */
   font-weight: bold;
 }
 
@@ -130,19 +134,19 @@
 
   <section>
     <h2>Las recomendaciones de Manu para hoy:</h2>
-    <ul class="game-list">
-      <li>Catan</li>
-      <li>Ciudadelas</li>
-      <li>Terraforming Mars</li>
-      <li>Magic the gathering</li>
-      <li>Parchís</li>
-      <li>Descent</li>
-      <li>Carcassonne</li>
-      <li>Dixit</li>
-      <li>Ticket to Ride</li>
-    </ul>
+      <!-- <ul class="game-list">
+        <li>Catan</li>
+        <li>Ciudadelas</li>
+        <li>Terraforming Mars</li>
+        <li>Magic the gathering</li>
+        <li>Parchís</li>
+        <li>Descent</li>
+        <li>Carcassonne</li>
+        <li>Dixit</li>
+        <li>Ticket to Ride</li> -->
+        <ul id="selectedGames"> </li>
+      <!-- </ul> -->
   </section>
-
  <section class="suggestions">
   <h2>Sugiere un nuevo juego:</h2>
   <form id="suggestForm">
@@ -158,13 +162,80 @@
 
     </h2>
     <p>Ingresa una palabra de 5 letras para adivinar.</p>
+   <script>
+    var gameList = ['Catan', 'Carcassonne', 'Ticket to Ride', '7 Wonders', 'Dominion', 'Risk', 'Monopoly',
+     'Clue', 'Scrabble', 'Pandemic', 'Agricola', 'Terra Mystica', 'Codenames', 'Splendor', 'Azul', 'Wingspan',
+     'Scythe', 'Gloomhaven', 'Arkham Horror', 'Betrayal at House on the Hill', 'The Resistance', 'Love Letter', 
+     'Small World', 'Chess', 'Checkers', 'Hive', 'Tigris & Euphrates', 'Twilight Struggle', 'Everdell', 'Parks',
+     'Brass: Birmingham', 'Root', 'The Crew', 'Quacks of Quedlinburg', 'Unlock!', 'Exit: The Game', 'King of Tokyo',
+     'Jaipur', 'Patchwork', 'Barenpark', 'Camel Up', 'Dead of Winter', 'Spirit Island', 'Decrypto', 'Telestrations',
+     'Just One', 'Dixit', 'Takenoko', 'Bang!', 'Magic: The Gathering'];
+    
+    function obtenerJuegosAleatorios(array, cantidad) {
+      const copia = [...array];
+      const resultado = [];
+      for (let i = 0; i < cantidad; i++) {
+        const indice = Math.floor(Math.random() * copia.length);
+        resultado.push(copia.splice(indice, 1)[0]);
+      }
+      return resultado;
+    }
+
+    const juegosAleatorios = obtenerJuegosAleatorios(gameList, 8);
+
+    const lista = document.getElementById('selectedGames');
+    juegosAleatorios.forEach(juego => {
+      const li = document.createElement('li');
+      li.textContent = juego;
+      lista.appendChild(li);
+    });
+
+   </script>
+
+  <section class="suggestions">
+    <h2>¿A que jugamos hoy?</h2>
+    <form id="suggestForm">
+      <input type="text" id="gameInput" placeholder="Nombre del juego" required />
+      <button type="submit">Agregar</button>
+    </form>
+    <div id="suggestedGames"></div>
+  </section>
+
+  <!-- Nuevo: Minijuego -->
+  <section id="wordGame">
+    <h2>Adivina la Palabra</h2>
+    <p>Ingresa una palabra para adivinar.</p>
     <form id="guessForm">
-      <input type="text" id="guessInput" maxlength="5" placeholder="Tu intento" required />
+      <input type="text" id="guessInput" placeholder="Tu intento" required />
       <button type="submit">Probar</button>
     </form>
     <div id="attempts"></div>
     <div id="gameResult"></div>
   </section>
+
+  <div id="main-menu" class="screen active">
+      <div class="menu-container">
+          <h1 class="game-title">JUEGO MARAVILLOSO</h1>
+          <div class="menu-options">
+      <div class="table1" id="grupo1">
+        <input type="submit" value="Jugar" onclick="ocultar('grupo1')">
+  </div>
+
+
+ <script>
+  function ocultar(id){
+    var elemento = document.getElementById(id);
+    elemento.style.display = "none";
+    localStorage.setItem('hidden', 'false')
+  }
+  function mostrar(id){
+    var elemento = document.getElementById(id);
+    elemento.style.display = "none";
+    localStorage.setItem('hidden', 'true')
+  }
+ </script>
+
+
 
   <script>
     // --- Código para el formulario de sugerencias ---
@@ -186,6 +257,7 @@
 
     // --- Código para el minijuego de adivinar palabra ---
     const dictionary = ['manzana', 'naranja', 'plátano', 'uvas', 'pera', 'kiwi', 'cereza', 'chirimoya'];
+
     const targetWord = dictionary[Math.floor(Math.random() * dictionary.length)].toLowerCase();
 
     const guessForm = document.getElementById('guessForm');
@@ -199,13 +271,17 @@
       e.preventDefault();
       const guess = guessInput.value.toLowerCase().trim();
 
-      if (guess.length !== 5 || !/^[a-z]+$/.test(guess)) {
+      //TO-DO -El maximo de cadena no tiene porque ser 5 sino el numero de caracteres de la palabra elegida
+      /*if (guess.length !== targetWord.length || !/^[a-z]+$/.test(guess)) {
         alert("Por favor ingresa una palabra válida de 5 letras.");
         return;
-      }
+      }*/
 
       if (attemptCount >= maxAttempts) {
         resultDiv.textContent = `El juego ha terminado. La palabra era "${targetWord}".`;
+        return;
+      }else if (targetWord == guess){
+        resultDiv.textContent = "¡Ganaste!";
         return;
       }
 
