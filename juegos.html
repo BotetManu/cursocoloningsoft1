@@ -7,11 +7,12 @@
   <title>Comunidad de Juegos de Mesa</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #fdfdfd url("./juegos-de-mesa-en-familia-1140x855.jpg") round;
-      margin: 0;
-      padding: 20px;
-      color: #333;;
+      font-family:'Dancing Script cursive';
+      background: #fdfdfd;
+      background-image: url("./juegos-de-mesa-en-familia-1140x855.jpg");
+      margin: 20;
+      padding: 50px;
+      color: #333;
       font-size: 1.4em;
       font-weight: bold;
       background-repeat: round;
@@ -38,9 +39,13 @@
       padding-left: 20px;
     }
 
-    .suggestions {
-      margin-top: 30px;
-    }
+    /* Centrar toda la seccion de sugerencias */
+  .suggestions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
 
     input, button {
       padding: 8px;
@@ -52,39 +57,64 @@
       border-radius: 10px;
       border: 1.5px solid #e9a81b67;
     }
+  /* Centrar el formulario y sus elementos */
+  .suggestions form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* Ajuste opcional para que el input y botón tengan mismo ancho visual */
+  .suggestions input,
+  .suggestions button {
+    width: auto; /* o usa un valor fijo como 250px si prefieres */
+  }
 
     .suggested-game {
       background: #e8f5e9;
-      padding: 8px;
-      margin: 4px 0;
-      border-left: 4px solid #4caf50;
-      border-radius: 4px;
+      padding: 20px;
+      margin: 20px 0;
+      border-left: 20px solid #4caf50;
+      border-radius: 20px;
     }
 
-    /* Estilos para el minijuego */
-    #wordGame input, #wordGame button {
-      margin-right: 10px;
-    }
+/* Centrar el contenido del minijuego */
+#wordGame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
 
+/* Para centrar cada fila de letras */
+#attempts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  margin-top: 10px;
+}
     #attempts {
       margin-top: 10px;
     }
 
-    .attempt-row {
-      display: flex;
-      gap: 5px;
-      margin-bottom: 5px;
-    }
+.attempt-row {
+  display: flex;
+  gap: 8px; /* Un poco más de espacio entre cajas */
+  margin-bottom: 8px;
+}
 
-    .letter-box {
-      width: 30px;
-      height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid #ccc;
-      font-weight: bold;
-    }
+.letter-box {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 8px solid #aaa; /* Puedes dejarlo igual o reforzar un poco el borde */
+  font-size: 50px;         /* Ajuste opcional del tamaño de letra */
+  font-weight: bold;
+}
 
     .correct-position {
       background-color: #6aaa64;
@@ -127,7 +157,21 @@
         <ul id="selectedGames"> </li>
       <!-- </ul> -->
   </section>
+ <section class="suggestions">
+  <h2>Sugiere un nuevo juego:</h2>
+  <form id="suggestForm">
+    <input type="text" id="gameInput" placeholder="Nombre del juego" required />
+    <button type="submit">Agregar</button>
+  </form>
+  <div id="suggestedGames"></div> <!-- Aquí aparecerán las sugerencias -->
+</section>
 
+  <!-- Nuevo: Minijuego -->
+  <section id="wordGame">
+    <h2>Adivina la Palabra
+
+    </h2>
+    <p>Ingresa una palabra de 5 letras para adivinar.</p>
    <script>
     var gameList = ['Catan', 'Carcassonne', 'Ticket to Ride', '7 Wonders', 'Dominion', 'Risk', 'Monopoly',
      'Clue', 'Scrabble', 'Pandemic', 'Agricola', 'Terra Mystica', 'Codenames', 'Splendor', 'Azul', 'Wingspan',
@@ -185,11 +229,6 @@
           <div class="menu-options">
       <div class="table1" id="grupo1">
         <input type="submit" value="Jugar" onclick="ocultar('grupo1')">
-      </div>
-            <div class="table2" id="grupo2">
-        <input type="submit" value="Jugar" onclick="mostrar('grupo2')">
-      </div>
-      </div>
   </div>
 
 
