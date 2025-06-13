@@ -6,11 +6,11 @@
   <title>Comunidad de Juegos de Mesa</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family:'Dancing Script cursive';
       background: #fdfdfd;
       background-image: url("./juegos-de-mesa-en-familia-1140x855.jpg");
-      margin: 0;
-      padding: 20px;
+      margin: 20;
+      padding: 50px;
       color: #333;
       font-size: 1.4em;
       color: #132a33;
@@ -40,8 +40,8 @@
     }
 
     input, button {
-      padding: 8px;
-      margin: 5px 0;
+      padding: 20px;
+      margin: 20px 0;
     }
 
     .suggested-game {
@@ -52,11 +52,23 @@
       border-radius: 4px;
     }
 
-    /* Estilos para el minijuego */
-    #wordGame input, #wordGame button {
-      margin-right: 10px;
-    }
+/* Centrar el contenido del minijuego */
+#wordGame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
 
+/* Para centrar cada fila de letras */
+#attempts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  margin-top: 10px;
+}
+    }
     #attempts {
       margin-top: 10px;
     }
@@ -124,12 +136,18 @@
       <input type="text" id="gameInput" placeholder="Nombre del juego" required />
       <button type="submit">Agregar</button>
     </form>
-    <div id="suggestedGames"></div>
+  <!-- Reloj de Arena cuenta atras -->
+   <div id="timer">
+      <span class="hourglass">⏳</span>
+      <div id="timeDisplay">1:46</div>
+    </div>
   </section>
 
   <!-- Nuevo: Minijuego -->
   <section id="wordGame">
-    <h2>Adivina la Palabra</h2>
+    <h2>Adivina la Palabra
+
+    </h2>
     <p>Ingresa una palabra de 5 letras para adivinar.</p>
     <form id="guessForm">
       <input type="text" id="guessInput" maxlength="5" placeholder="Tu intento" required />
