@@ -130,6 +130,26 @@
       background-color: #787c7e;
       color: white;
     }
+
+.boton {
+      position: absolute;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #jugar-btn {
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: top 0.3s ease, left 0.3s ease;
+      background-color: #869e43;
+    }
+    
+    .movil {
+      position: absolute;
+    }
+    
   </style>
 </head>
 <body>
@@ -225,26 +245,44 @@
 
   <div id="main-menu" class="screen active">
       <div class="menu-container">
-          <h1 class="game-title">JUEGO MARAVILLOSO</h1>
-          <div class="menu-options">
-      <div class="table1" id="grupo1">
-        <input type="submit" value="Jugar" onclick="ocultar('grupo1')">
+        <h1 class="game-title">JUEGO MARAVILLOSO 😄</h1>
+      </div>
+      <div id="contenedor">
+        <button id = "jugar-btn">Jugar</button>
+      </div>
   </div>
 
 
- <script>
-  function ocultar(id){
-    var elemento = document.getElementById(id);
-    elemento.style.display = "none";
-    localStorage.setItem('hidden', 'false')
-  }
-  function mostrar(id){
-    var elemento = document.getElementById(id);
-    elemento.style.display = "none";
-    localStorage.setItem('hidden', 'true')
-  }
- </script>
+   <script>
+    const button = document.getElementById('jugar-btn');
 
+    function moverBoton() {
+      if (!button.classList.contains('movil')) {
+        // Obtenemos su posición actual en la pantalla
+        const rect = button.getBoundingClientRect();
+        const scrollTop = window.scrollY;
+        const scrollLeft = window.scrollX;
+
+        // Le damos estilo absoluto con la posición actual
+        button.style.position = 'absolute';
+        button.style.top = `${rect.top + scrollTop}px`;
+        button.style.left = `${rect.left + scrollLeft}px`;
+        button.classList.add('movil');
+      }
+
+      // Nueva posición aleatoria dentro de la ventana
+      const maxX = window.innerWidth - button.offsetWidth;
+      const maxY = window.innerHeight - button.offsetHeight;
+
+      const randomX = Math.random() * maxX;
+      const randomY = Math.random() * maxY;
+
+      button.style.left = `${randomX}px`;
+      button.style.top = `${randomY}px`;
+    }
+
+    button.addEventListener('click', moverBoton);
+  </script>
 
 
   <script>
